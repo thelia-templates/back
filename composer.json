@@ -3,7 +3,7 @@
     "type": "thelia-backoffice-template",
     "require": {
         "thelia/smarty-module": "dev-twig",
-        "thelia/hook-admin-home-module": "dev-main",
+        "thelia/hook-admin-home-module": "dev-twig",
         "thelia/tinymce-module": "dev-main",
         "thelia/virtual-product-control-module": "dev-main",
         "thelia/virtual-product-delivery-module": "dev-main",
