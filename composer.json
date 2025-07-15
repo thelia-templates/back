@@ -8,8 +8,8 @@
         "thelia/virtual-product-control-module": "dev-main",
         "thelia/virtual-product-delivery-module": "dev-main",
         "thelia/custom-delivery-module": "dev-twig",
-        "thelia/cheque-module": "dev-main",
-        "thelia/free-order-module": "dev-main"
+        "thelia/cheque-module": "dev-twig",
+        "thelia/free-order-module": "dev-twig"
     },
     "extra": {
         "installer-name": "default"
