@@ -28,7 +28,7 @@ return [
     '<strong>Warning</strong>, some of your countries are not included in any shipping zone:' => '<strong>Attention</strong>, certains des pays ne sont inclus dans aucune zone de livraison',
     '<strong>Warning</strong>, some of your shipping zones are not attached to any delivery module:' => '<strong>Attention</strong>, les zones de livraison suivantes ne sont associées à aucun module:',
     'A content could be attached to more than one folder. Select here the additional folders for this content.' => 'Un contenu peut être rattaché à plusieurs dossiers. Sélectionnez ici les dossiers dans lesquels ce contenu apparaîtra',
-    'A product could be attached to more than one category. Select here the additional categories for this product.' => 'Un produit peut être associé à plusieurs rubriques. Sélectionner les rubrique pour lesquels le produit sera associé',
+    'A product could be attached to more than one category. Select here the additional categories for this product.' => 'Un produit peut être associé à plusieurs rubriques. Sélectionnez les rubriques pour lesquelles le produit sera associé.',
     'API configuration' => 'Configuration de l\'API',
     'API list access' => 'Liste des accès à l\'API',
     'API users' => 'Utilisateurs de l\'API',
