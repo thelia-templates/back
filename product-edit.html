@@ -843,9 +843,23 @@ $(function() {
                 }
             });
         });
-    })
+    });
 
+    $(document).on("click", ".productSaleElementToggleVisibility", function (e) {
+        e.preventDefault();
+        var $button = $(this);
 
+        $.ajax({
+            url : "{url path='/admin/product/product-sale-element-visibility'}",
+            data : {
+                product_sale_element_id : $(this).data('id')
+            },
+            success: function() {
+                console.log($(this));
+                $button.toggleClass("visibility-visible");
+            }
+        });
+    });
 </script>
 
 

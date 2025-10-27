@@ -7,7 +7,6 @@
         {loop name="product.combinations" type="attribute_combination" product_sale_elements="$ID"}
             {$has_at_least_one_combination = true}
         {/loop}
-
         {elseloop rel="product.combinations"}
             {$default_product_sale_element_id = $ID}
         {/elseloop}
@@ -392,7 +391,6 @@
                                         <input type="hidden" class="pse_id_field" name="{$name}" value="{$value}" />
                                         {$current_pse_id = $value}
                                     {/form_field}
-
                                     <div class="btn-group">
                                         <a class="btn btn-default btn-xs pse-assoc-image pse-assoc-image-document" data-target="#pse-assoc-image-document-modal" data-id="{$value}" title="{intl l="Associate images"}">
                                             <span class="glyphicon glyphicon-picture"></span>
@@ -400,6 +398,11 @@
                                         <a class="btn btn-default btn-xs pse-assoc-document pse-assoc-image-document" data-target="#pse-assoc-image-document-modal" data-id="{$value}" title="{intl l="Associate documents"}">
                                             <span class="glyphicon glyphicon-file"></span>
                                         </a>
+                                        {loop name="product.sales.elements.test" type="product_sale_elements" id=$current_pse_id backend_context="1"}
+                                        <div class="productSaleElementToggleVisibility btn btn-default btn-xs {if $VISIBLE}visibility-visible{/if}" data-id="{$current_pse_id}" data-error-message="{intl l='Please retry'}">
+                                            <i class="glyphicon glyphicon-eye-open"></i><i class="glyphicon glyphicon-eye-close"></i>
+                                        </div>
+                                        {/loop}
                                         {if $VIRTUAL}
                                         <a class="btn btn-success btn-xs pse-assoc-virtual pse-assoc-image-document" data-type="virtual" data-target="#pse-assoc-image-document-modal" data-id="{$value}" title="{intl l="Associate downloadable file"}">
                                             <span class="glyphicon glyphicon-download"></span>
