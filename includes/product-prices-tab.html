@@ -383,14 +383,17 @@
 	                           {$pse_count = $total_value_count}
 	                        {/form_field}
 
-	                        {for $idx = 0 to $total_value_count-1}
-	                        <tr>
+                            {loop name="product.sales.elements.data" type="product_sale_elements" product=$product_id backend_context="1"}
+                                {$idx = $LOOP_COUNT - 1}
+                                {$current_pse_id = $ID}
+                            <tr>
                                 <td colspan="10">
 
                                     {form_field field='product_sale_element_id' value_key=$idx}
                                         <input type="hidden" class="pse_id_field" name="{$name}" value="{$value}" />
-                                        {$current_pse_id = $value}
+
                                     {/form_field}
+
                                     <div class="btn-group">
                                         <a class="btn btn-default btn-xs pse-assoc-image pse-assoc-image-document" data-target="#pse-assoc-image-document-modal" data-id="{$value}" title="{intl l="Associate images"}">
                                             <span class="glyphicon glyphicon-picture"></span>
@@ -398,11 +401,9 @@
                                         <a class="btn btn-default btn-xs pse-assoc-document pse-assoc-image-document" data-target="#pse-assoc-image-document-modal" data-id="{$value}" title="{intl l="Associate documents"}">
                                             <span class="glyphicon glyphicon-file"></span>
                                         </a>
-                                        {loop name="product.sales.elements.test" type="product_sale_elements" id=$current_pse_id backend_context="1"}
                                         <div class="productSaleElementToggleVisibility btn btn-default btn-xs {if $VISIBLE}visibility-visible{/if}" data-id="{$current_pse_id}" data-error-message="{intl l='Please retry'}">
                                             <i class="glyphicon glyphicon-eye-open"></i><i class="glyphicon glyphicon-eye-close"></i>
                                         </div>
-                                        {/loop}
                                         {if $VIRTUAL}
                                         <a class="btn btn-success btn-xs pse-assoc-virtual pse-assoc-image-document" data-type="virtual" data-target="#pse-assoc-image-document-modal" data-id="{$value}" title="{intl l="Associate downloadable file"}">
                                             <span class="glyphicon glyphicon-download"></span>
@@ -421,6 +422,7 @@
 								</td>
 
                                 <td class="text-right">ID: {$current_pse_id}</td>
+                                <td class="text-right">{intl l="Position"}</td>
                             </tr>
 
                             <tr>
@@ -480,11 +482,23 @@
                                     <input {if !$show_pricing_fields}readonly{/if} data-price-type="sale-price-with-tax" data-rel-price="sale_price_without_tax_{$idx}" id="sale_price_with_tax_{$idx}" class="price_field automatic_price_field form-control text-right input-sm" type="text" name="{$name}" value="{$value}"  />
                                 </td>
                                 {/form_field}
+
+                                <td class="text-center">
+                                        {admin_position_block
+                                            resource="admin.product"
+                                            access="UPDATE"
+                                            path={url path='/admin/product/product-sale-element-position'}
+                                            url_parameter="product_sale_element_id"
+                                            in_place_edit_class="productSaleElementPositionChange"
+                                            position=$POSITION
+                                            id=$current_pse_id
+                                        }
+                                </td>
                             </tr>
 
                             {hook name="product.combinations-row" pse=$current_pse_id idx=$idx}
 
-	                        {/for}
+                            {/loop}
 					    </tbody>
 					</table>
 
@@ -714,7 +728,7 @@
 		        </ul>
 		    </div>
 		</div>
-        {loop type="product_sale_elements" name="product_sale_elements_combination_form" product=$product_id default="yes" limit=1 backend_context=1}
+        {loop type="product_sale_elements" name="product_sale_elements_combination_form" product=$product_id order='position' default="yes" limit=1 backend_context=1}
 		<div class="col-md-6">
          {form_field field='price'}
              <div class="form-group {if $error}has-error{/if}">
