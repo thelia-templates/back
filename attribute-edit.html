@@ -157,7 +157,7 @@
     				                                        }
     				                                    </td>
 
-    				                                    {hook name="attributes-value.table-row" location="attributes_value_table_row" attribute_id=$attribute_id}
+                                                        {hook name="attributes-value.table-row" location="attributes_value_table_row" attribute_id=$attribute_id attribute_av_id=$ID}
 
     				                                    <td class="actions">
                                                             {loop type="auth" name="can_create" role="ADMIN" resource="admin.configuration.attribute" access="UPDATE"}
