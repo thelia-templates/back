@@ -64,6 +64,8 @@
      					            	{if $form_error}<div class="alert alert-danger">{$form_error_message}</div>{/if}
 
                                         {include file="includes/standard-description-form-fields.html"}
+
+                                         {hook name="attribute-edit-form.bottom" attribute_id=$attribute_id}
 		    						</div>
 
 		     						<div class="col-md-6">
