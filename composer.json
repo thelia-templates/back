@@ -4,7 +4,7 @@
     "require": {
         "thelia/smarty-module": "dev-twig",
         "thelia/hook-admin-home-module": "dev-twig",
-        "thelia/tinymce-module": "dev-main",
+        "thelia/tinymce-module": "dev-twig",
         "thelia/virtual-product-control-module": "dev-main",
         "thelia/virtual-product-delivery-module": "dev-twig",
         "thelia/custom-delivery-module": "dev-twig",
