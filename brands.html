@@ -27,7 +27,7 @@
 
                     <div class="general-block-decorator">
                         <div class="table-responsive">
-                            <table class="table table-striped table-condensed">
+                            <table class="table table-striped table-condensed" data-testid="brands-table">
                                <caption class="clearfix">
                                     {intl l='Brands'}
                                     {include file='renderer/buttons.html' btn_group=false buttons=[
@@ -96,7 +96,7 @@
 
                                 <tbody>
                                     {loop name="brands" type="brand" visible="*" backend_context="1" lang=$lang_id order=$order return_url=false}
-                                        <tr>
+                                        <tr data-testid="brands-row">
                                             <td>{$ID}</td>
 
                                             <td>

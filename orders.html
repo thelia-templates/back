@@ -28,7 +28,7 @@
             <div class="col-md-12">
                 <div class="general-block-decorator">
                 	<div class="table-responsive">
-	                    <table class="table table-striped table-condensed table-left-aligned">
+	                    <table class="table table-striped table-condensed table-left-aligned" data-testid="orders-table">
 	                        <caption class="clearfix">
 	                           {intl l='Orders'}
 	                        </caption>
@@ -120,7 +120,7 @@
                                         {assign "orderStatusCodeColor" $COLOR}
                                     {/loop}
 
-                                    <tr>
+                                    <tr data-testid="orders-row">
                                         <td><a href="{url path="/admin/order/update/%id" id=$ID}">{$ID}</a></td>
                                        	<td><a href="{url path="/admin/order/update/%id" id=$ID}">{$REF}</a></td>
                                        	<td>{format_date date=$CREATE_DATE}</td>
