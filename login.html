@@ -11,9 +11,9 @@
         {hook name="index.top" location="index_top" }
 
         {form name="thelia.admin.login"}
-        <form action="{url path='/admin/checklogin'}" method="post" {form_enctype}>
+        <form action="{url path='/admin/checklogin'}" method="post" data-testid="login-form" {form_enctype}>
 
-            {if $form_error}<div class="alert alert-danger">{$form_error_message}</div>{/if}
+            {if $form_error}<div class="alert alert-danger" data-testid="login-error">{$form_error_message}</div>{/if}
 
             <fieldset>
                 {form_hidden_fields}
@@ -27,7 +27,7 @@
                     <label for="{$label_attr.for|default:null}" class="control-label hidden">{$label} : </label>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                        <input type="text" id="{$label_attr.for|default:null}" name="{$name}" class="form-control input-lg" title="{$label}" placeholder="{intl l='Username or e-mail address'}" autofocus>
+                        <input type="text" id="{$label_attr.for|default:null}" name="{$name}" class="form-control input-lg" title="{$label}" placeholder="{intl l='Username or e-mail address'}" data-testid="login-username" autofocus>
                     </div>
                 </div>
                 {/form_field}
@@ -37,7 +37,7 @@
                     <label for="{$label_attr.for|default:null}" class="control-label hidden">{$label} : </label>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                        <input type="password" id="{$label_attr.for|default:null}" name="{$name}" class="form-control input-lg" title="{$label}" placeholder="{intl l='Password'}">
+                        <input type="password" id="{$label_attr.for|default:null}" name="{$name}" class="form-control input-lg" title="{$label}" placeholder="{intl l='Password'}" data-testid="login-password">
                     </div>
                 </div>
                 {/form_field}
@@ -64,7 +64,7 @@
                     </div>
                     {/if}
                 </div>
-                <button type="submit" class="btn btn-block btn-primary btn-lg"><span class="hidden-xs glyphicon glyphicon-off"></span> {intl l='Login'}</button>
+                <button type="submit" class="btn btn-block btn-primary btn-lg" data-testid="login-submit"><span class="hidden-xs glyphicon glyphicon-off"></span> {intl l='Login'}</button>
             </fieldset>
         </form>
         {/form}

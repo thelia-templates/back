@@ -11,7 +11,7 @@
 {block name="page-title"}{/block}
 
 {block name="main-content"}
-    <div class="homepage">
+    <div class="homepage" data-testid="dashboard">
         <div id="wrapper" class="container">
 
             {hook name="home.top" location="home_top" }
@@ -19,7 +19,7 @@
             <div class="row">
                 {hookblock name="home.block" fields="id,title,content,class"}
                 {forhook rel="home.block"}
-                <div class="{if $class}{$class}{else}col-md-4{/if}">
+                <div class="{if $class}{$class}{else}col-md-4{/if}" data-testid="dashboard-home-block">
                     <div {if $id}id="{$id}"{/if} class="general-block-decorator">
                         {if $title}<div class="title title-without-tabs">{$title}</div>{/if}
                         {$content nofilter}

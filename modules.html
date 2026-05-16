@@ -10,7 +10,7 @@
 {block name="check-access"}view{/block}
 
 {block name="main-content"}
-<div class="modules">
+<div class="modules" data-testid="modules-list">
 
     <div id="wrapper" class="container">
 
@@ -37,9 +37,9 @@
             <div class="col-md-12">
             {if isset($error_message)}<div class="alert alert-danger">{$error_message}</div>{/if}
 
-            {include file="includes/module-block.html" module_type="2" caption_title={intl l='Delivery modules'}}
-            {include file="includes/module-block.html" module_type="3" caption_title={intl l='Payment modules'}}
-            {include file="includes/module-block.html" module_type="1" caption_title={intl l='Classic modules'}}
+            <div data-testid="modules-block-delivery">{include file="includes/module-block.html" module_type="2" caption_title={intl l='Delivery modules'}}</div>
+            <div data-testid="modules-block-payment">{include file="includes/module-block.html" module_type="3" caption_title={intl l='Payment modules'}}</div>
+            <div data-testid="modules-block-classic">{include file="includes/module-block.html" module_type="1" caption_title={intl l='Classic modules'}}</div>
 
             </div>
 
