@@ -2,6 +2,8 @@
     "name": "thelia/backoffice-default-template",
     "type": "thelia-backoffice-template",
     "require": {
+        "php": ">=8.3",
+        "symfony/framework-bundle": "^7.4",
         "thelia/smarty-module": "dev-twig",
         "thelia/hook-admin-home-module": "dev-twig",
         "thelia/tinymce-module": "dev-twig",
@@ -10,6 +12,13 @@
         "thelia/custom-delivery-module": "dev-twig",
         "thelia/cheque-module": "dev-twig",
         "thelia/free-order-module": "dev-twig"
+    },
+    "autoload": {
+        "psr-4": {
+            "BackOfficeDefaultBundle\\": "",
+            "Thelia\\Controller\\Admin\\": "Controller/Admin/",
+            "Thelia\\Form\\": "Form/"
+        }
     },
     "extra": {
         "installer-name": "default"
