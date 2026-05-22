@@ -72,3 +72,27 @@ without registry collision.
   (PSR-4 will pick it up via `Thelia\Controller\Admin\*` mapping).
 
 PHPStan and php-cs-fixer scan this directory like any other PHP source.
+
+## Upgrade notes
+
+### From a pre-0.1 Thelia 3 install
+
+Early Thelia 3 installs (before this package was tagged 0.1.0) shipped the
+back-office attribute route loader entry directly inside `config/routes.yaml`:
+
+```yaml
+bo_default_admin_attributes:
+    resource: .
+    type: bo_default_attribute
+```
+
+Starting with 0.1.0, the Flex recipe installs the same entry under
+`config/routes/bo_default.yaml` instead. If both files exist after upgrading,
+Symfony will throw a 500 at boot time:
+
+> Do not add the "bo_default_attribute" loader twice in . (which is being
+> imported from "config/routes.yaml").
+
+The fix is to delete the stale legacy entry. Either remove `config/routes.yaml`
+entirely if it only contained that block, or strip just the
+`bo_default_admin_attributes` key if you have other top-level routes there.
