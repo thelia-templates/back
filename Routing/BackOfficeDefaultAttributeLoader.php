@@ -19,7 +19,10 @@ final class BackOfficeDefaultAttributeLoader extends Loader
     public function load(mixed $resource, ?string $type = null): RouteCollection
     {
         if ($this->isLoaded) {
-            throw new \RuntimeException(\sprintf('Do not add the "%s" loader twice.', self::ROUTE_TYPE));
+            throw new \RuntimeException(\sprintf(
+                'The "%s" route loader was called twice. If you upgraded from a pre-0.1 install, remove the duplicate entry from config/routes.yaml — the Flex recipe now declares it in config/routes/bo_default.yaml.',
+                self::ROUTE_TYPE,
+            ));
         }
 
         $routes = new RouteCollection();
