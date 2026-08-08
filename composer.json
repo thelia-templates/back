@@ -6,14 +6,13 @@
     "require": {
         "php": ">=8.3",
         "symfony/framework-bundle": "^7.4",
-        "thelia/smarty-module": "dev-twig",
-        "thelia/hook-admin-home-module": "dev-twig",
-        "thelia/tinymce-module": "dev-twig",
-        "thelia/virtual-product-control-module": "dev-main",
-        "thelia/virtual-product-delivery-module": "dev-twig",
-        "thelia/custom-delivery-module": "dev-twig",
-        "thelia/cheque-module": "dev-twig",
-        "thelia/free-order-module": "dev-twig"
+        "thelia/smarty-module": "^3.0",
+        "thelia/hook-admin-home-module": "^3.0",
+        "thelia/virtual-product-control-module": "^2.6",
+        "thelia/virtual-product-delivery-module": "^3.0",
+        "thelia/custom-delivery-module": "^4.0",
+        "thelia/cheque-module": "^3.0",
+        "thelia/free-order-module": "^3.0"
     },
     "autoload": {
         "psr-4": {
