@@ -1,9 +1,16 @@
 # thelia/backoffice-default-template
 
-Smarty-based back-office template for Thelia 3 — historically named "default".
-This package ships both the Smarty templates (`*.html`, `*.tpl`, hooks, assets) and
-the PHP back-office bundle that hosts the legacy admin controllers, forms, routing
-and form registry.
+Legacy Smarty back-office template for Thelia, historically named "default".
+It is kept for compatibility with existing installs and third-party modules that
+still ship Smarty admin templates.
+
+The default back office of Thelia 3 is now
+[thelia/backoffice-default-twig-template](https://github.com/thelia-templates/default-twig).
+Use this package only if you need the Smarty admin.
+
+It ships both the Smarty templates (`*.html`, `*.tpl`, hooks, assets) and the PHP
+back-office bundle hosting the legacy admin controllers, forms, routing and form
+registry.
 
 ## What this package provides
 
@@ -23,13 +30,12 @@ templates/backOffice/default/
 
 ## Why these PHP classes live here
 
-Before this extraction (cf. PLAN.md), the admin controllers and forms lived in
-`core/lib/Thelia/Controller/Admin/` and `core/lib/Thelia/Form/`. Moving them
-to the back-office template package decouples the core from the legacy Smarty
-admin layer while preserving full compatibility with third-party modules
-(the namespaces `Thelia\Controller\Admin\*` and `Thelia\Form\*` are kept
-intact via Composer PSR-4 path mapping; cf. `AUDIT_RESULTS.md` for the impact
-audit on the top-30 third-party modules).
+The admin controllers and forms used to live in
+`core/lib/Thelia/Controller/Admin/` and `core/lib/Thelia/Form/`. Moving them to
+the back-office template package decouples the core from the legacy Smarty admin
+layer while keeping third-party modules working: the namespaces
+`Thelia\Controller\Admin\*` and `Thelia\Form\*` are preserved through Composer
+PSR-4 path mapping.
 
 ## Activation
 
