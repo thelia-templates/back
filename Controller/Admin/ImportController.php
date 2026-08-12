@@ -18,13 +18,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Thelia\Core\Archiver\AbstractArchiver;
 use Thelia\Core\Archiver\ArchiverManager;
 use Thelia\Core\Event\TheliaEvents;
 use Thelia\Core\Event\UpdatePositionEvent;
 use Thelia\Core\Security\AccessManager;
 use Thelia\Core\Security\Resource\AdminResources;
-use Thelia\Core\Serializer\AbstractSerializer;
 use Thelia\Core\Serializer\SerializerManager;
 use Thelia\Form\Definition\AdminForm;
 use Thelia\Form\Exception\FormValidationException;
@@ -147,20 +145,10 @@ class ImportController extends BaseAdminController
             return $this->pageNotFound();
         }
 
-        $extensions = [];
-        $mimeTypes = [];
-
-        /** @var AbstractSerializer $serializer */
-        foreach ($serializerManager->getSerializers() as $serializer) {
-            $extensions[] = $serializer->getExtension();
-            $mimeTypes[] = $serializer->getMimeType();
-        }
-
-        /** @var AbstractArchiver $archiver */
-        foreach ($archiverManager->getArchivers(true) as $archiver) {
-            $extensions[] = $archiver->getExtension();
-            $mimeTypes[] = $archiver->getMimeType();
-        }
+        // Advertise exactly what the import handlers accept, so that the page and the
+        // constraint enforced by ImportForm cannot drift apart.
+        $extensions = $importHandler->getAcceptedExtensions();
+        $mimeTypes = $importHandler->getAcceptedMimeTypes();
 
         // Render standard view or ajax one
         $templateName = 'import-page';
