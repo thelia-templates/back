@@ -28,8 +28,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Thelia\Core\Event\ActionEvent;
 use Thelia\Core\Event\FeatureProduct\FeatureProductDeleteEvent;
 use Thelia\Core\Event\FeatureProduct\FeatureProductUpdateEvent;
-use Thelia\Core\Event\MetaData\MetaDataCreateOrUpdateEvent;
-use Thelia\Core\Event\MetaData\MetaDataDeleteEvent;
 use Thelia\Core\Event\Product\ProductAddAccessoryEvent;
 use Thelia\Core\Event\Product\ProductAddCategoryEvent;
 use Thelia\Core\Event\Product\ProductAddContentEvent;
@@ -78,8 +76,6 @@ use Thelia\Model\FeatureProductQuery;
 use Thelia\Model\FeatureQuery;
 use Thelia\Model\FeatureTemplateQuery;
 use Thelia\Model\FolderQuery;
-use Thelia\Model\MetaData;
-use Thelia\Model\MetaDataQuery;
 use Thelia\Model\Product;
 use Thelia\Model\ProductAssociatedContentQuery;
 use Thelia\Model\ProductDocument;
@@ -365,9 +361,12 @@ class ProductController extends AbstractSeoCrudController
 
         // Virtual document
         if (\array_key_exists('product_sale_element_id', $defaultPseData)) {
-            $virtualDocumentId = (int) MetaDataQuery::getVal('virtual', MetaData::PSE_KEY, $defaultPseData['product_sale_element_id']);
+            $virtualDocumentId = ProductSaleElementsQuery::create()
+                ->findPk($defaultPseData['product_sale_element_id'])
+                ?->getVirtualDocument()
+                ?->getId();
 
-            if (0 !== $virtualDocumentId) {
+            if (null !== $virtualDocumentId) {
                 $data['virtual_document_id'] = $virtualDocumentId;
             }
         }
@@ -528,15 +527,7 @@ class ProductController extends AbstractSeoCrudController
                 ->filterByIsDefault(true)
                 ->findOne();
 
-            if (null !== $defaultPSE) {
-                if (0 !== $virtualDocumentId) {
-                    $assocEvent = new MetaDataCreateOrUpdateEvent('virtual', MetaData::PSE_KEY, $defaultPSE->getId(), $virtualDocumentId);
-                    $eventDispatcher->dispatch($assocEvent, TheliaEvents::META_DATA_UPDATE);
-                } else {
-                    $assocEvent = new MetaDataDeleteEvent('virtual', MetaData::PSE_KEY, $defaultPSE->getId());
-                    $eventDispatcher->dispatch($assocEvent, TheliaEvents::META_DATA_DELETE);
-                }
-            }
+            $defaultPSE?->setVirtualDocument(0 !== $virtualDocumentId ? $virtualDocumentId : null);
         }
 
         return null;
@@ -550,7 +541,7 @@ class ProductController extends AbstractSeoCrudController
         $this->checkAuth(AdminResources::PRODUCT, [], AccessManager::VIEW);
         $this->checkXmlHttpRequest();
 
-        $selectedId = (int) MetaDataQuery::getVal('virtual', MetaData::PSE_KEY, $pseId);
+        $selectedId = ProductSaleElementsQuery::create()->findPk($pseId)?->getVirtualDocument()?->getId();
 
         $documents = ProductDocumentQuery::create()
             ->filterByProductId($productId)
@@ -1539,15 +1530,17 @@ class ProductController extends AbstractSeoCrudController
                 throw new \Exception($this->getTranslator()->trans("The product document id %id doesn't exists", ['%id' => $pseId]));
             }
 
-            $documentId = (int) MetaDataQuery::getVal('virtual', MetaData::PSE_KEY, $pseId);
+            $pse = ProductSaleElementsQuery::create()->findPk($pseId);
 
-            if ($documentId === (int) $typeId) {
-                $assocEvent = new MetaDataDeleteEvent('virtual', MetaData::PSE_KEY, $pseId);
-                $eventDispatcher->dispatch($assocEvent, TheliaEvents::META_DATA_DELETE);
+            if (null === $pse) {
+                throw new \Exception($this->getTranslator()->trans("The product sale element id %id doesn't exists", ['%id' => $pseId]));
+            }
+
+            if ($pse->getVirtualDocument()?->getId() === (int) $typeId) {
+                $pse->setVirtualDocument(null);
                 $responseData['is-associated'] = 0;
             } else {
-                $assocEvent = new MetaDataCreateOrUpdateEvent('virtual', MetaData::PSE_KEY, $pseId, $typeId);
-                $eventDispatcher->dispatch($assocEvent, TheliaEvents::META_DATA_UPDATE);
+                $pse->setVirtualDocument((int) $typeId);
                 $responseData['is-associated'] = 1;
             }
 
@@ -1743,7 +1736,7 @@ class ProductController extends AbstractSeoCrudController
         $documents = $documentLoop
             ->exec($documentPagination);
 
-        $documentId = (int) MetaDataQuery::getVal('virtual', 'pse', $pse->getId());
+        $documentId = $pse->getVirtualDocument()?->getId();
 
         $data = [];
 
