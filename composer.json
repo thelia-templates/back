@@ -22,9 +22,6 @@
         }
     },
     "extra": {
-        "installer-name": "default",
-        "branch-alias": {
-            "dev-twig": "0.1.x-dev"
-        }
+        "installer-name": "default"
     }
 }
